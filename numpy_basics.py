@@ -1,0 +1,12 @@
+import numpy as np
+array = np.random.randint(0, 50, size=10) 
+print("Array:")
+print(array)
+array_sum = np.sum(array)
+array_mean = np.mean(array)
+array_max = np.max(array)
+array_min = np.min(array)
+print("\nSum:", array_sum)
+print("Mean:", array_mean)
+print("Max:", array_max)
+print("Min:", array_min)
