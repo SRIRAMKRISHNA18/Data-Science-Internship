@@ -3,11 +3,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Load Dataset (Replace 'your_dataset.csv' with actual filename)
+# Load Dataset (Replace 'Diseases_Dataset.xlsx' with actual filename)
 try:
-    df = pd.read_csv('C:\Users\srira\OneDrive\Desktop\Intern Week-1\sample_data.csv')
+    df = pd.read_excel('C:\\Users\\srira\\OneDrive\\Desktop\\Intern Week-1\\Diseases_Dataset.xlsx')
 except FileNotFoundError:
-    print("Error: The file 'your_dataset.csv' was not found. Please check the file path.")
+    print("Error: The file 'Diseases_Dataset.xlsx' was not found. Please check the file path.")
     exit()
 
 # Check if the dataset is empty
