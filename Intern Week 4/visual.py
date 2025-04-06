@@ -1,47 +1,61 @@
-# 1. Load the Data
 import pandas as pd
-import seaborn as sns
 import matplotlib.pyplot as plt
+import seaborn as sns
 
-# Load a sample dataset (Iris from seaborn, or replace with pd.read_csv('your_dataset.csv'))
-df = sns.load_dataset('iris')  # Replace with: df = pd.read_csv("your_dataset.csv")
+# Load the IPL dataset
+df = pd.read_excel(r"C:\Users\srira\OneDrive\Desktop\Intern Week-1\Data-Science-Internship-Basics\Intern Week 4\ipl_stats.xlsx")
 
-# 2. Basic Analysis
-print("First 5 rows of the dataset:")
-print(df.head())
+# Set Seaborn style
+sns.set(style="whitegrid")
 
-print("\nShape of the dataset:")
-print(f"Rows: {df.shape[0]}, Columns: {df.shape[1]}")
+# ----- Basic Dataset Info -----
+print("Top 5 rows:\n", df.head())
+print("\nDataset shape:", df.shape)
+print("\nMissing values:\n", df.isnull().sum())
+print("\nStatistical Summary:\n", df.describe())
 
-print("\nColumn names and data types:")
-print(df.dtypes)
-
-# 3. Data Summary
-print("\nSummary statistics:")
-print(df.describe())
-
-print("\nChecking for missing values:")
-print(df.isnull().sum())
-
-# 4. Visualization
-
-# Bar chart: Count of each species
-plt.figure(figsize=(6, 4))
-sns.countplot(x='species', data=df)
-plt.title('Count of each Species')
+# ----- 1. Top 10 Run Scorers -----
+top_runs = df.sort_values(by="Runs", ascending=False).head(10)
+plt.figure(figsize=(10, 6))
+sns.barplot(x="Runs", y="Player Name", data=top_runs, palette="Greens")
+plt.title("Top 10 Run Scorers in IPL")
+plt.xlabel("Total Runs")
+plt.ylabel("Player Name")
+plt.tight_layout()
 plt.show()
 
-# Line plot: Sepal length across samples
-plt.figure(figsize=(10, 4))
-plt.plot(df['sepal_length'], label='Sepal Length')
-plt.title('Sepal Length Across Samples')
-plt.xlabel('Sample Index')
-plt.ylabel('Sepal Length (cm)')
-plt.legend()
+# ----- 2. Top 10 Wicket Takers -----
+top_wickets = df.sort_values(by="Wickets", ascending=False).head(10)
+plt.figure(figsize=(10, 6))
+sns.barplot(x="Wickets", y="Player Name", data=top_wickets, palette="Reds")
+plt.title("Top 10 Wicket Takers in IPL")
+plt.xlabel("Total Wickets")
+plt.ylabel("Player Name")
+plt.tight_layout()
 plt.show()
 
-# Scatter plot: Sepal vs Petal length
-plt.figure(figsize=(6, 5))
-sns.scatterplot(data=df, x='sepal_length', y='petal_length', hue='species')
-plt.title('Sepal Length vs Petal Length')
+# ----- 3. Team-wise Player Distribution -----
+plt.figure(figsize=(10, 6))
+sns.countplot(data=df, x="Team", order=df["Team"].value_counts().index, palette="Set2")
+plt.title("Number of Players per Team")
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+# ----- 4. Strike Rate Distribution -----
+plt.figure(figsize=(10, 5))
+sns.histplot(df["Strike Rate"], kde=True, bins=15, color='purple')
+plt.title("Distribution of Strike Rates")
+plt.xlabel("Strike Rate")
+plt.ylabel("Count")
+plt.tight_layout()
+plt.show()
+
+# ----- 5. Economy vs Wickets (Bubble Plot) -----
+plt.figure(figsize=(10, 6))
+sns.scatterplot(data=df, x="Economy", y="Wickets", hue="Team", size="Matches", sizes=(50, 300), palette="deep")
+plt.title("Economy vs Wickets (Size ~ Matches)")
+plt.xlabel("Economy")
+plt.ylabel("Wickets")
+plt.tight_layout()
 plt.show()
